@@ -136,28 +136,24 @@ echo "-------------------------------------------
 read -s -n1 s
 
 if [ $s = 1 ]; then
-	install_nginx
-	install_php
-	install_mysql
-	install_phpmyadmin
-	menu_install
+	install_nginx; install_php; install_mysql; install_phpmyadmin; menu_install
 else 
  if [ $s = 2 ]; then
-	install_nginx && menu_install
+	install_nginx; menu_install
  else
   if [ $s = 3 ]; then
-	install_php && menu_install
+	install_php; menu_install
   else
    if [ $s = 4 ]; then
-	install_mysql && menu_install
+	install_mysql; menu_install
    else
     if [ $s = 5 ]; then
-	install_phpmyadmin && menu_install
+	install_phpmyadmin; menu_install
     else
      if [ $s = 6 ]; then
 	exit
      else
-	echo "Oops! Please pick 1,2,3,4,5 or 6" && menu_install
+	echo "Oops! Please pick 1,2,3,4,5 or 6"; menu_install
      fi
     fi
    fi
@@ -215,28 +211,24 @@ echo "-------------------------------------------
 read -s -n1 s
 
 if [ $s = 1 ]; then
-	remove_phpmyadmin
-	remove_mysql
-	remove_php
-	remove_nginx
-	menu_remove
+	remove_phpmyadmin; remove_mysql; remove_php; remove_nginx; menu_remove
 else
  if [ $s = 2 ]; then
-	remove_phpmyadmin && menu_remove
+	remove_phpmyadmin; menu_remove
  else
   if [ $s = 3 ]; then
-	remove_mysql && menu_remove
+	remove_mysql; menu_remove
   else
    if [ $s = 4 ]; then
-	remove_php && menu_remove
+	remove_php; menu_remove
    else
     if [ $s = 5 ]; then
-	remove_nginx && menu_remove
+	remove_nginx; menu_remove
     else
      if [ $s = 6 ]; then
 	exit
      else
-	echo "Oops! Please pick 1,2,3,4,5 or 6" && menu_remove
+	echo "Oops! Please pick 1,2,3,4,5 or 6"; menu_remove
      fi
     fi
    fi
