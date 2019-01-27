@@ -121,7 +121,7 @@ echo -e $GREEN"
 menu_install() {
 
 if [ $EUID != 0 ]; then
- echo -e $RED "To run a command as administrator (root), use 'sudo' command"$NOCOLOR; exit 0
+ echo -e $RED "To run a command as administrator (root), use 'sudo'"$NOCOLOR; exit 0
 fi
 
 echo "-------------------------------------------
@@ -196,7 +196,7 @@ remove_nginx() {
 menu_remove() {
 
 if [ $EUID != 0 ]; then
- echo -e $RED "To run a command as administrator (root), use 'sudo' command"$NOCOLOR; exit 0
+ echo -e $RED "To run a command as administrator (root), use 'sudo'"$NOCOLOR; exit 0
 fi
 
 echo "-------------------------------------------
