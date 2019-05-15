@@ -1,2 +1,2 @@
-<b>LEMP</b><hr>
+<b>LEMP</b><br>
 Script install or remove LEMP (Linux, Engine-X, MariaDB, Php-Fpm) Stack and phpMyAdmin on Manjaro/Arch Linux for localhost (/srv/http)
