@@ -6,10 +6,7 @@
 	SCRIPT_NAME='lemp'
 	VERSION='0.5'
 	AUTHOR='Berty Li'
-	RED="\e[1;31m"
-	YELLOW="\e[1;33m"
-	GREEN="\e[1;32m"
-	NOCOLOR="\e[0m"
+	RED, YELLOW, GREEN, NC='\e[1;31m', '\e[1;33m', '\e[1;32m', '\e[0m'
 
 # Install LEMP Stack and phpMyAdmin
 
@@ -72,7 +69,7 @@ echo -e $GREEN"
 ---------------------------------------------------
 | Open http://localhost/phpinfo.php for check PHP |
 ---------------------------------------------------
-"$NOCOLOR
+"$NC
 echo -n "Press key <ENTER> to continue..." && read
 
 echo "Rewriting file 'php.ini'..."
@@ -115,13 +112,13 @@ echo -e $GREEN"
 | http://localhost/phpMyAdmin or		|
 | http://127.0.0.1/phpMyAdmin			|
 -------------------------------------------------
-"$NOCOLOR
+"$NC
 }
 
 menu_install() {
 
 if [ $EUID != 0 ]; then
- echo -e $RED"To run a command as administrator (root), use 'sudo'"$NOCOLOR; exit 0
+ echo -e $RED"To run a command as administrator (root), use 'sudo'"$NC; exit 0
 fi
 
 echo "-------------------------------------------
@@ -196,7 +193,7 @@ remove_nginx() {
 menu_remove() {
 
 if [ $EUID != 0 ]; then
- echo -e $RED"To run a command as administrator (root), use 'sudo'"$NOCOLOR; exit 0
+ echo -e $RED"To run a command as administrator (root), use 'sudo'"$NC; exit 0
 fi
 
 echo "-------------------------------------------
@@ -260,7 +257,7 @@ echo -e $YELLOW"Choose one of the following options:
 -S	Install LEMP Stack and phpMyAdmin
 -R	Remove LEMP Stack and phpMyAdmin
 -v	Show version and exit
--h	Show help"$NOCOLOR
+-h	Show help"$NC
 exit
 }
 
@@ -271,9 +268,9 @@ if [ -n "$1" ]; then
    case "$1" in
 	-S)	menu_install ;;
 	-R)	menu_remove ;;
-	-v)	echo -e $YELLOW "$SCRIPT_NAME $VERSION"$NOCOLOR ;;
+	-v)	echo -e $YELLOW "$SCRIPT_NAME $VERSION"$NC ;;
 	-h)	show_help ;;
-	*)	echo -e $RED "$1 is not an option!"$NOCOLOR ;;
+	*)	echo -e $RED "$1 is not an option!"$NC ;;
    esac
   shift
  done
