@@ -6,7 +6,7 @@
 	SCRIPT_NAME='lemp'
 	VERSION='0.5'
 	AUTHOR='Berty Li'
-	RED, YELLOW, GREEN, NC='\e[1;31m', '\e[1;33m', '\e[1;32m', '\e[0m'
+	R='\e[1;31m' G='\e[1;32m' Y='\e[1;33m' N='\e[0m'
 
 # Install LEMP Stack and phpMyAdmin
 
@@ -65,11 +65,11 @@ echo "<?php phpinfo(); ?>" > /srv/http/phpinfo.php
 	systemctl start php-fpm.service
 	systemctl enable php-fpm.service
 
-echo -e $GREEN"
+echo -e $G"
 ---------------------------------------------------
 | Open http://localhost/phpinfo.php for check PHP |
 ---------------------------------------------------
-"$NC
+"$N
 echo -n "Press key <ENTER> to continue..." && read
 
 echo "Rewriting file 'php.ini'..."
@@ -106,19 +106,19 @@ echo "Restart services..."
 	systemctl restart nginx.service
 	systemctl restart php-fpm.service
 
-echo -e $GREEN"
+echo -e $G"
 -------------------------------------------------
 | Open your web browser and navigate to:	|
 | http://localhost/phpMyAdmin or		|
 | http://127.0.0.1/phpMyAdmin			|
 -------------------------------------------------
-"$NC
+"$N
 }
 
 menu_install() {
 
 if [ $EUID != 0 ]; then
- echo -e $RED"To run a command as administrator (root), use 'sudo'"$NC; exit 0
+ echo -e $R"To run a command as administrator (root), use 'sudo'"$N; exit 0
 fi
 
 echo "-------------------------------------------
@@ -193,7 +193,7 @@ remove_nginx() {
 menu_remove() {
 
 if [ $EUID != 0 ]; then
- echo -e $RED"To run a command as administrator (root), use 'sudo'"$NC; exit 0
+ echo -e $R"To run a command as administrator (root), use 'sudo'"$N; exit 0
 fi
 
 echo "-------------------------------------------
@@ -253,11 +253,11 @@ exit
 }
 
 option() {
-echo -e $YELLOW"Choose one of the following options:
+echo -e $Y"Choose one of the following options:
 -S	Install LEMP Stack and phpMyAdmin
 -R	Remove LEMP Stack and phpMyAdmin
 -v	Show version and exit
--h	Show help"$NC
+-h	Show help"$N
 exit
 }
 
