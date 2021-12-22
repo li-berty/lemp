@@ -268,9 +268,9 @@ if [ -n "$1" ]; then
    case "$1" in
 	-S)	menu_install ;;
 	-R)	menu_remove ;;
-	-v)	echo -e $YELLOW "$SCRIPT_NAME $VERSION"$NC ;;
+	-v)	echo -e $Y "$SCRIPT_NAME $VERSION"$N ;;
 	-h)	show_help ;;
-	*)	echo -e $RED "$1 is not an option!"$NC ;;
+	*)	echo -e $R "$1 is not an option!"$N ;;
    esac
   shift
  done
