@@ -1,12 +1,13 @@
 #!/bin/bash
-
 # LEMP [Linux, Engine-X, MariaDB, Php-Fpm] Stack and phpMyAdmin on Manjaro/Arch Linux for localhost
-# Github: https://github.com/li-berty/lemp
 
-	SCRIPT_NAME='lemp'
-	VERSION='0.5'
-	AUTHOR='Berty Li'
-	R='\e[1;31m' G='\e[1;32m' Y='\e[1;33m' N='\e[0m'
+R='\e[1;31m' G='\e[1;32m' Y='\e[1;33m' N='\e[0m'
+
+sudo_access() {
+if [ $EUID -ne 0 ]; then
+ echo -e $R"Run this script as root (sudo)"$N; exit
+fi
+}
 
 # Install LEMP Stack and phpMyAdmin
 
@@ -117,11 +118,8 @@ echo -e $G"
 
 menu_install() {
 
-if [ $EUID != 0 ]; then
- echo -e $R"To run a command as administrator (root), use 'sudo'"$N; exit 0
-fi
-
-echo "-------------------------------------------
+sudo_access
+echo "--------------------------------------
 	Choose action:
 	1 - install all
 	2 - install NGINX
@@ -129,28 +127,28 @@ echo "-------------------------------------------
 	4 - install MySQL
 	5 - install phpMyAdmin
 	6 - exit
--------------------------------------------"
+--------------------------------------"
 read -s -n1 s
 
-if [ $s = 1 ]; then
+if [[ $s = 1 ]]; then
 	install_nginx; install_php; install_mysql; install_phpmyadmin; menu_install
 else 
- if [ $s = 2 ]; then
+ if [[ $s = 2 ]]; then
 	install_nginx; menu_install
  else
-  if [ $s = 3 ]; then
+  if [[ $s = 3 ]]; then
 	install_php; menu_install
   else
-   if [ $s = 4 ]; then
+   if [[ $s = 4 ]]; then
 	install_mysql; menu_install
    else
-    if [ $s = 5 ]; then
+    if [[ $s = 5 ]]; then
 	install_phpmyadmin; menu_install
     else
-     if [ $s = 6 ]; then
+     if [[ $s = 6 ]]; then
 	exit
      else
-	echo "Oops! Please pick 1,2,3,4,5 or 6"; menu_install
+	clear; echo -e $R"Oops! Please pick 1,2,3,4,5 or 6"$N; menu_install
      fi
     fi
    fi
@@ -192,11 +190,8 @@ remove_nginx() {
 
 menu_remove() {
 
-if [ $EUID != 0 ]; then
- echo -e $R"To run a command as administrator (root), use 'sudo'"$N; exit 0
-fi
-
-echo "-------------------------------------------
+sudo_access
+echo "--------------------------------------
 	Choose action:
 	1 - remove all
 	2 - remove phpMyAdmin
@@ -204,28 +199,28 @@ echo "-------------------------------------------
 	4 - remove PHP
 	5 - remove NGINX
 	6 - exit
--------------------------------------------"
+--------------------------------------"
 read -s -n1 s
 
-if [ $s = 1 ]; then
+if [[ $s = 1 ]]; then
 	remove_phpmyadmin; remove_mysql; remove_php; remove_nginx; menu_remove
 else
- if [ $s = 2 ]; then
+ if [[ $s = 2 ]]; then
 	remove_phpmyadmin; menu_remove
  else
-  if [ $s = 3 ]; then
+  if [[ $s = 3 ]]; then
 	remove_mysql; menu_remove
   else
-   if [ $s = 4 ]; then
+   if [[ $s = 4 ]]; then
 	remove_php; menu_remove
    else
-    if [ $s = 5 ]; then
+    if [[ $s = 5 ]]; then
 	remove_nginx; menu_remove
     else
-     if [ $s = 6 ]; then
+     if [[ $s = 6 ]]; then
 	exit
      else
-	echo "Oops! Please pick 1,2,3,4,5 or 6"; menu_remove
+	clear; echo -e $R"Oops! Please pick 1,2,3,4,5 or 6"$N; menu_remove
      fi
     fi
    fi
@@ -234,46 +229,19 @@ else
 fi
 }
 
-show_help() {
-echo "------------------------------------------------------------
-NAME
-	lemp - [Linux, Engine-X, MariaDB, Php-Fpm] Stack and
-	phpMyAdmin on Manjaro/Arch Linux for localhost
-SYNOPSIS
-	lemp [OPTION]
-DESCRIPTION
-	-S	Install LEMP Stack and phpMyAdmin
-	-R	Remove LEMP Stack and phpMyAdmin
-	-v	Show version
-	-h	Show help
-AUTHOR
-	Written by $AUTHOR
-------------------------------------------------------------"
-exit
-}
+echo -e "--------------------------------------
+Choose one of the following options:
+1 - Install LEMP Stack and phpMyAdmin
+2 - Remove LEMP Stack and phpMyAdmin
+--------------------------------------"
+read -s -n1 s
 
-option() {
-echo -e $Y"Choose one of the following options:
--S	Install LEMP Stack and phpMyAdmin
--R	Remove LEMP Stack and phpMyAdmin
--v	Show version and exit
--h	Show help"$N
-exit
-}
-
-# Choice
-if [ -n "$1" ]; then
- while [ -n "$1" ]
-  do
-   case "$1" in
-	-S)	menu_install ;;
-	-R)	menu_remove ;;
-	-v)	echo -e $Y "$SCRIPT_NAME $VERSION"$N ;;
-	-h)	show_help ;;
-	*)	echo -e $R "$1 is not an option!"$N ;;
-   esac
-  shift
- done
+if [[ $s = 1 ]]; then
+	clear; menu_install
 else
- option
+ if [[ $s = 2 ]]; then
+	clear; menu_remove
+ else
+	clear; echo -e $R"Oops! Please pick 1 or 2"$N
+ fi
 fi
