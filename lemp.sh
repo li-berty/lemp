@@ -7,8 +7,6 @@ if [ $EUID -ne 0 ]; then
  echo -e $R"Run this script as root (sudo)"$N; exit
 fi
 
-clear
-
 # Install LEMP Stack and phpMyAdmin
 
 install_nginx() {
@@ -164,47 +162,29 @@ echo -e "------------------------------------------------------
 read -s -n1 digit
 
 if [[ $digit = 1 ]]; then
-	install_nginx; install_php; install_mysql; install_phpmyadmin; menu
-else 
- if [[ $digit = 2 ]]; then
-	install_nginx; menu
- else
-  if [[ $digit = 3 ]]; then
+		install_nginx; install_php; install_mysql; install_phpmyadmin; menu
+elif [[ $digit = 2 ]]; then
+		install_nginx; menu
+ elif [[ $digit = 3 ]]; then
 		install_php; menu
-  else
-   if [[ $digit = 4 ]]; then
+  elif [[ $digit = 4 ]]; then
 		install_mysql; menu
-   else
-    if [[ $digit = 5 ]]; then
+   elif [[ $digit = 5 ]]; then
 		install_phpmyadmin; menu
-    else
-     if [[ $digit = 6 ]]; then
+    elif [[ $digit = 6 ]]; then
 		remove_phpmyadmin; menu
-     else
-      if [[ $digit = 7 ]]; then
+     elif [[ $digit = 7 ]]; then
 		remove_mysql; menu     
-      else
-       if [[ $digit = 8 ]]; then
+      elif [[ $digit = 8 ]]; then
 		remove_php; menu
-       else
-        if [[ $digit = 9 ]]; then
+       elif [[ $digit = 9 ]]; then
 		remove_nginx; menu
-        else
-         if [[ $digit = 0 ]]; then
+        elif [[ $digit = 0 ]]; then
 		remove_phpmyadmin; remove_mysql; remove_php; remove_nginx; menu
          else
 		clear; break
-         fi
-        fi
-       fi
-      fi
-     fi
-    fi
-   fi
-  fi
- fi
 fi
 done
 }
 
-menu
+clear; menu
