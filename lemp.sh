@@ -3,11 +3,11 @@
 
 R='\e[1;31m' G='\e[1;32m' Y='\e[1;33m' N='\e[0m'
 
-sudo_access() {
 if [ $EUID -ne 0 ]; then
  echo -e $R"Run this script as root (sudo)"$N; exit
 fi
-}
+
+clear
 
 # Install LEMP Stack and phpMyAdmin
 
@@ -116,47 +116,6 @@ echo -e $G"
 "$N
 }
 
-menu_install() {
-
-sudo_access
-echo "--------------------------------------
-	Choose action:
-	1 - install all
-	2 - install NGINX
-	3 - install PHP
-	4 - install MySQL
-	5 - install phpMyAdmin
-	6 - exit
---------------------------------------"
-read -s -n1 s
-
-if [[ $s = 1 ]]; then
-	install_nginx; install_php; install_mysql; install_phpmyadmin; menu_install
-else 
- if [[ $s = 2 ]]; then
-	install_nginx; menu_install
- else
-  if [[ $s = 3 ]]; then
-	install_php; menu_install
-  else
-   if [[ $s = 4 ]]; then
-	install_mysql; menu_install
-   else
-    if [[ $s = 5 ]]; then
-	install_phpmyadmin; menu_install
-    else
-     if [[ $s = 6 ]]; then
-	exit
-     else
-	clear; echo -e $R"Oops! Please pick 1,2,3,4,5 or 6"$N; menu_install
-     fi
-    fi
-   fi
-  fi
- fi
-fi
-}
-
 # Remove LEMP Stack and phpMyAdmin
 
 remove_phpmyadmin() {
@@ -188,60 +147,64 @@ remove_nginx() {
 	systemctl daemon-reload
 }
 
-menu_remove() {
+menu() {
+while :
+do
+echo -e "------------------------------------------------------
+	Choose one of the following options:
 
-sudo_access
-echo "--------------------------------------
-	Choose action:
-	1 - remove all
-	2 - remove phpMyAdmin
-	3 - remove MySQL
-	4 - remove PHP
-	5 - remove NGINX
-	6 - exit
---------------------------------------"
-read -s -n1 s
+1 - install all			6 - remove phpMyAdmin
+2 - install NGINX		7 - remove MySQL
+3 - install PHP			8 - remove PHP
+4 - install MySQL		9 - remove NGINX
+5 - install phpMyAdmin		0 - remove all
+------------------------------------------------------
+	Pick <any key> to exit"
 
-if [[ $s = 1 ]]; then
-	remove_phpmyadmin; remove_mysql; remove_php; remove_nginx; menu_remove
-else
- if [[ $s = 2 ]]; then
-	remove_phpmyadmin; menu_remove
+read -s -n1 digit
+
+if [[ $digit = 1 ]]; then
+	install_nginx; install_php; install_mysql; install_phpmyadmin; menu
+else 
+ if [[ $digit = 2 ]]; then
+	install_nginx; menu
  else
-  if [[ $s = 3 ]]; then
-	remove_mysql; menu_remove
+  if [[ $digit = 3 ]]; then
+		install_php; menu
   else
-   if [[ $s = 4 ]]; then
-	remove_php; menu_remove
+   if [[ $digit = 4 ]]; then
+		install_mysql; menu
    else
-    if [[ $s = 5 ]]; then
-	remove_nginx; menu_remove
+    if [[ $digit = 5 ]]; then
+		install_phpmyadmin; menu
     else
-     if [[ $s = 6 ]]; then
-	exit
+     if [[ $digit = 6 ]]; then
+		remove_phpmyadmin; menu
      else
-	clear; echo -e $R"Oops! Please pick 1,2,3,4,5 or 6"$N; menu_remove
+      if [[ $digit = 7 ]]; then
+		remove_mysql; menu     
+      else
+       if [[ $digit = 8 ]]; then
+		remove_php; menu
+       else
+        if [[ $digit = 9 ]]; then
+		remove_nginx; menu
+        else
+         if [[ $digit = 0 ]]; then
+		remove_phpmyadmin; remove_mysql; remove_php; remove_nginx; menu
+         else
+		clear; break
+         fi
+        fi
+       fi
+      fi
      fi
     fi
    fi
   fi
  fi
 fi
+done
 }
 
-echo -e "--------------------------------------
-Choose one of the following options:
-1 - Install LEMP Stack and phpMyAdmin
-2 - Remove LEMP Stack and phpMyAdmin
---------------------------------------"
-read -s -n1 s
-
-if [[ $s = 1 ]]; then
-	clear; menu_install
-else
- if [[ $s = 2 ]]; then
-	clear; menu_remove
- else
-	clear; echo -e $R"Oops! Please pick 1 or 2"$N
- fi
-fi
+menu
