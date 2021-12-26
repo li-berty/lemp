@@ -146,8 +146,7 @@ remove_nginx() {
 }
 
 menu() {
-while :
-do
+
 echo -e "------------------------------------------------------
 	Choose one of the following options:
 
@@ -182,9 +181,8 @@ elif [[ $digit = 2 ]]; then
         elif [[ $digit = 0 ]]; then
 		remove_phpmyadmin; remove_mysql; remove_php; remove_nginx; menu
          else
-		clear; break
+		clear; exit
 fi
-done
 }
 
 clear; menu
